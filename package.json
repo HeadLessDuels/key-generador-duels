@@ -1,0 +1,15 @@
+{
+  "name": "key-generator-system",
+  "version": "1.0.0",
+  "description": "Sistema de generación y validación de keys con HWID",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["keys", "hwid", "generator"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Generación y Validación de Keys</title>
+    <link rel="stylesheet" href="style.css?v=3000">
+</head>
+<body>
+    <!-- Fondo de bosque oscuro cinematográfico -->
+    <div class="forest-scene">
+        <!-- Cielo nocturno con estrellas -->
+        <div class="night-sky"></div>
+        
+        <!-- Siluetas de árboles en capas -->
+        <div class="trees-layer layer-back"></div>
+        <div class="trees-layer layer-mid"></div>
+        <div class="trees-layer layer-front"></div>
+        
+        <!-- Niebla animada -->
+        <div class="fog fog-1"></div>
+        <div class="fog fog-2"></div>
+        <div class="fog fog-3"></div>
+        
+        <!-- Canvas para lluvia optimizada -->
+        <canvas id="rainCanvas"></canvas>
+        
+        <!-- Overlay de iluminación -->
+        <div class="lighting-overlay"></div>
+    </div>
+
+    <div class="container">
+            <!-- Panel HWID (izquierda) -->
+            <aside class="hwid-panel">
+                <!-- Reset HWID -->
+                <div class="hwid-card">
+                    <h3>Reset HWID</h3>
+                    <input type="text" id="keyToReset" placeholder="KEY-XXXXXXXX" class="hwid-input">
+                    <button class="btn-hwid btn-reset" onclick="resetKeyHWID()">Reset HWID</button>
+                    <div id="resetResult" class="hwid-result hidden"></div>
+                </div>
+            </aside>
+
+            <!-- Panel principal -->
+            <main class="main-panel">
+            <h1 class="title">Sistema de Keys</h1>
+            
+            <!-- Sección de generación de keys - Diseño vertical compacto -->
+            <section class="card generate-section-compact">
+                <div class="magic-circle">
+                    <div class="circle-ring ring-1"></div>
+                    <div class="circle-ring ring-2"></div>
+                    <div class="circle-ring ring-3"></div>
+                    <div class="key-icon-center">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="7" cy="7" r="3"/>
+                            <path d="M10 10l11 11M14 14l2 2M16 12l2 2"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <h2 class="compact-title">Generar Key</h2>
+                
+                <div class="compact-input-wrapper">
+                    <div class="input-decoration"></div>
+                    <input type="text" id="days" value="30" class="compact-input" inputmode="numeric" pattern="[0-9]*">
+                </div>
+                
+                <button class="btn-magic" onclick="generateKey()">
+                    <span class="btn-text">Generar</span>
+                    <div class="magic-particles"></div>
+                </button>
+                
+                <!-- Resultado de generación con animación -->
+                <div id="generatedResult" class="result-compact hidden">
+                    <div class="result-glow"></div>
+                    <div class="key-reveal" style="padding: 1rem; border-radius: 15px;">
+                        <div class="key-label-compact" style="font-size: 0.7rem; margin-bottom: 0.5rem;">Tu Key</div>
+                        <div class="key-value-compact" id="generatedKey" style="font-size: 1.1rem; margin-bottom: 0.75rem; letter-spacing: 2px;"></div>
+                        <div class="key-expiration-compact" style="font-size: 0.8rem; margin-bottom: 0.75rem;">
+                            <span id="expirationDate"></span>
+                        </div>
+                        <button class="btn-copy-compact" onclick="copyKey(event)" style="padding: 0.7rem; font-size: 0.85rem; border-radius: 10px; background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); border: none; box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4); transition: all 0.3s ease;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                            </svg>
+                            Copiar
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Panel lateral con lista de keys -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Keys Generadas</h2>
+                <div class="stats">
+                    <span class="stat-badge">
+                        <span id="activeCount">0</span> Activas
+                    </span>
+                </div>
+            </div>
+            
+            <div id="keysList" class="keys-list">
+                <p class="empty-message">No hay keys generadas aún</p>
+            </div>
+        </aside>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
