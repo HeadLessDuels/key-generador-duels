@@ -6,8 +6,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuración de Supabase
-const SUPABASE_URL = 'https://ypwanrgfkmoogolkqev.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlwd2Fucmdma21vb2dvbGtxZXYiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTczNTk1NzU0NiwiZXhwIjoyMDUxNTMzNTQ2fQ.ceSNEBtiZnE7BNUNFT5uZQ_nMx191q3';
+const SUPABASE_URL = 'https://vpaaoxgfkmoogzoitxpv.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwYWFveGdma21vb2d6b2l0eHB2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3MTY5NDcsImV4cCI6MjA4ODI5Mjk0N30.yp3mySHf9Ymo1smiJ5cOGXItKsnkABR5uZMVginCUmE';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
