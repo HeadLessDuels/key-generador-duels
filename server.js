@@ -35,6 +35,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// ============================================
+// ENDPOINTS PARA ROBLOX
+// ============================================
+
 // Endpoint para verificar keys desde Roblox
 app.post('/api/verify-key', async (req, res) => {
     try {
@@ -187,6 +191,7 @@ app.get('/api/keys', async (req, res) => {
             success: true,
             keys: keys
         });
+
     } catch (error) {
         console.error('❌ Error obteniendo keys:', error);
         return res.json({
