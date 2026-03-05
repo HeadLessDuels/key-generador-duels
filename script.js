@@ -70,7 +70,7 @@ function resetKeyHWID() {
         return;
     }
     
-    // Buscar la key
+    // Buscar la key localmente
     const keyObject = keys.find(k => k.key === key);
     
     if (!keyObject) {
@@ -83,14 +83,35 @@ function resetKeyHWID() {
         return;
     }
     
-    // Resetear HWID
+    // Resetear HWID localmente
     keyObject.hwid = null;
     keyObject.linkedDate = null;
     
     saveKeysToStorage();
     updateKeysList();
     
-    showHWIDResult('resetResult', 'HWID reseteado correctamente', 'success');
+    // Resetear en el servidor
+    fetch('/api/reset-hwid', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ key: key })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('✅ HWID reseteado en el servidor');
+            showHWIDResult('resetResult', 'HWID reseteado correctamente', 'success');
+        } else {
+            showHWIDResult('resetResult', 'Error al resetear en servidor', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('❌ Error de red:', error);
+        showHWIDResult('resetResult', 'HWID reseteado localmente', 'warning');
+    });
+    
     keyInput.value = '';
 }
 
@@ -233,11 +254,31 @@ function generateKey() {
         createdAt: new Date().toISOString()
     };
     
-    // Agregar a la lista
+    // Agregar a la lista local
     keys.unshift(keyObject);
     
     // Guardar en localStorage
     saveKeysToStorage();
+    
+    // Enviar al servidor
+    fetch('/api/add-key', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(keyObject)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('✅ Key sincronizada con el servidor');
+        } else {
+            console.error('❌ Error al sincronizar key:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('❌ Error de red:', error);
+    });
     
     // Mostrar resultado
     displayGeneratedKey(key, expirationDate);
@@ -412,10 +453,30 @@ function createKeyItem(keyObject, index) {
  * Elimina una key del sistema
  */
 function deleteKey(index) {
+    const keyToDelete = keys[index].key;
+    
     keys.splice(index, 1);
     saveKeysToStorage();
     updateKeysList();
     updateActiveCount();
+    
+    // Eliminar del servidor
+    fetch('/api/delete-key', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ key: keyToDelete })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('✅ Key eliminada del servidor');
+        }
+    })
+    .catch(error => {
+        console.error('❌ Error al eliminar del servidor:', error);
+    });
 }
 
 /**
@@ -484,4 +545,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
